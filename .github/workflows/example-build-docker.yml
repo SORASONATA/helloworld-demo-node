@@ -41,11 +41,7 @@ jobs:
     - name: Install dependencies
       run: yarn install --frozen-lockfile
 
-    - name: Install Nx CLI
-      run: yarn global add nx  # Ensure Nx CLI is available
-
-    - name: Build the project
-      run: yarn Nx build api-flowaccount-workshop
+    # No build step is included
 
     - name: Build, tag, and push Docker image
       env:
