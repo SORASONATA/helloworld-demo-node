@@ -32,17 +32,6 @@ jobs:
       with:
         aws-region: us-east-1
 
-    - name: Remove package-lock.json if it exists
-      run: |
-        if [ -f package-lock.json ]; then
-          rm package-lock.json
-        fi
-
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
-
-    # No build step is included
-
     - name: Build, tag, and push Docker image
       env:
         ECR_URI: "927546943206.dkr.ecr.us-east-1.amazonaws.com/hellonode"
