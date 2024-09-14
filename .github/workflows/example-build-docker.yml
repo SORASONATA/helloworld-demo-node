@@ -30,7 +30,7 @@ jobs:
     - name: Log in to Amazon ECR
       uses: aws-actions/amazon-ecr-login@v2
       with:
-        aws-region: us-east-1  # Specify your AWS region here
+        aws-region: us-east-1
 
     - name: Remove package-lock.json if it exists
       run: |
@@ -51,3 +51,8 @@ jobs:
       run: |
         docker build -t $ECR_URI:$IMAGE_TAG .
         docker push $ECR_URI:$IMAGE_TAG
+
+    - name: Image digest
+      run: |
+        IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' $ECR_URI:$IMAGE_TAG)
+        echo "Docker image pushed: $IMAGE_DIGEST"
