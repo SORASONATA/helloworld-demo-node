@@ -45,7 +45,7 @@ jobs:
       run: yarn global add nx  # Ensure Nx CLI is available
 
     - name: Build the project
-      run: yarn  build api-flowaccount-workshop
+      run: yarn Nx build api-flowaccount-workshop
 
     - name: Build, tag, and push Docker image
       env:
