@@ -3,7 +3,7 @@ name: Build and Push Docker Image to ECR
 on:
   push:
     branches:
-      - main # Or specify any branch you want to trigger this workflow on
+      - main # or specify any branch you want to trigger this workflow on
 
 jobs:
   build-and-push:
@@ -15,7 +15,7 @@ jobs:
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
-
+# 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
@@ -28,7 +28,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} # Optional: Use if MFA or session token is needed
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} # Use the session token
         aws-region: us-east-1 # Change to your AWS region
 
     - name: Get ECR repository URI
@@ -37,7 +37,15 @@ jobs:
 
     - name: Build, tag, and push Docker image
       env:
-        ECR_URI: ${{ env.REPO_URI }} # Corrected the environment variable syntax
+        ECR_URI: {{"927546943206.dkr.ecr.us-east-1.amazonaws.com/hellonode" }}
+        IMAGE_TAG: ${{ github.sha }}
       run: |
-        docker build -t $ECR_URI:latest .
-        docker push $ECR_URI:latest
+        yarn --frozen-lockfile
+        yarn nx build api-flowaccount-workshop
+        docker build -t $ECR_URI:$IMAGE_TAG .
+        docker push $ECR_URI:$IMAGE_TAG
+
+    # - name: Image digest
+    #   run: |
+    #     IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.REPO_URI }}:${{ github.sha }})
+    #     echo "Docker image pushed: $IMAGE_DIGEST"
