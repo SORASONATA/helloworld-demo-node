@@ -24,7 +24,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} # Optional if using session tokens
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region: us-east-1
 
     - name: Log in to Amazon ECR
@@ -42,7 +42,7 @@ jobs:
       run: yarn install --frozen-lockfile
 
     - name: Build the project
-      run: yarn build  # Adjust this to your build command
+      run: yarn build:prod  # Adjust to your actual build script
 
     - name: Build, tag, and push Docker image
       env:
