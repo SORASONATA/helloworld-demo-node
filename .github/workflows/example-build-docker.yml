@@ -40,7 +40,3 @@ jobs:
         docker build -t $ECR_URI:$IMAGE_TAG .
         docker push $ECR_URI:$IMAGE_TAG
 
-    - name: Image digest
-      run: |
-        IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' $ECR_URI:$IMAGE_TAG)
-        echo "Docker image pushed: $IMAGE_DIGEST"
